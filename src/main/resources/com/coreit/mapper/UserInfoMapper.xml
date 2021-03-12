@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coreit.mapper.UserInfoMapper">
+
+	<!-- 모든 user_info 레코드 조회 -->
+	<select id="getList" resultType="com.coreit.domain.UserInfoVO">
+		SELECT * FROM user_info
+	</select>
+	
+	<!-- 페이징 처리한 user_info 레코드 조회 -->
+	<select id="getListWithPaging" resultType="com.coreit.domain.UserInfoVO">
+		SELECT u_idx, u_id, u_name, u_birth, u_gender, u_edu, 
+			   date_format(cret_date, '%Y-%m-%d') as 'cret_date'
+		FROM user_info WHERE del_yn = 'N'
+		LIMIT #{amount} OFFSET #{offset}
+	</select>
+	
+	<!-- 검색 결과 조회 -->
+	<select id="searchList" resultType="com.coreit.domain.UserInfoVO">
+		SELECT u_idx, u_id, u_name, u_birth, u_gender, u_edu, 
+               date_format(cret_date, '%Y-%m-%d') as 'cret_date'
+        FROM user_info
+        WHERE u_name LIKE #{keyword} AND del_yn = 'N'
+        LIMIT #{cri.amount} OFFSET #{cri.offset}
+	</select>
+	
+	<!-- 특정 아이디 1개 조회 -->
+	<select id="getUserInfo" resultType="com.coreit.domain.UserInfoVO">
+		SELECT * FROM user_info WHERE u_idx = #{u_idx}
+	</select>
+	
+	<!-- user_info 레코드 추가 -->
+	<insert id="insertUserInfo">
+		INSERT INTO user_info 
+                     (u_id, u_pw, u_name, u_birth, u_gender, u_email, u_phone, u_tel, 
+                      u_hobby, u_edu, cret_id, cret_ip)
+              VALUES (#{u_id}, SHA2(#{u_pw}, 256), #{u_name}, #{u_birth}, #{u_gender},
+                      #{u_email}, #{u_phone}, #{u_tel},
+                      #{u_hobby}, #{u_edu}, #{cret_id}, #{cret_ip});
+		<selectKey resultType="int" keyProperty="u_idx" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<!-- user_info 레코드 수정 -->
+	<update id="updateUserInfo">
+		UPDATE user_info
+		SET u_email = #{u_email}, u_phone = #{u_phone}, u_tel = #{u_tel}, 
+        	u_hobby = #{u_hobby}, u_edu = #{u_edu}
+        WHERE u_idx = #{u_idx}
+	</update>
+	
+	<!-- user_info 레코드 삭제 (del_yn = Y 처리) -->
+	<update id="deleteUserInfo">
+		UPDATE user_info SET del_yn = 'Y' WHERE u_idx = #{u_idx}
+	</update>
+	
+	<!-- user_info 총 레코드 갯수 반환 (del_yn = N 인 레코드만) -->
+	<select id="getTotal" resultType="int">
+		SELECT COUNT(u_idx) FROM user_info
+		WHERE del_yn = 'N'
+	</select>
+	
+	<!-- user_info 검색 결과 총 레코드 갯수 반환 (del_yn = N 인 레코드만) -->
+	<select id="getSearchTotal" resultType="int">
+		SELECT COUNT(u_idx) FROM user_info
+		WHERE u_name LIKE #{keyword} AND del_yn = 'N'
+	</select>
+</mapper>
