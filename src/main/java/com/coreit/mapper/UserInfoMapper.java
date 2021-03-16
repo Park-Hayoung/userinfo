@@ -22,7 +22,11 @@ public interface UserInfoMapper {
 	
 	public int deleteUserInfo(int u_idx);
 	
+	public int deleteUserInfoReal(int u_idx);
+	
 	public int getTotal();
 	
 	public int getSearchTotal(String keyword);
+	
+	public int pwCheck(UserInfoVO userInfo);
 }

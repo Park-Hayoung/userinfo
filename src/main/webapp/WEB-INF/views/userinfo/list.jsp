@@ -32,46 +32,49 @@ function setCriteria(keyword) {
             			</c:forEach>
             		</select>
             	</p>
+            	<!-- 이 놈을 caption 옆에 오도록 배치해라. -->
+            	<!-- 그리고 완전삭제 기능 추가해라. -->
+            	<p align="right">총 ${page.total}개</p>
                 <table border='1'>
-                <caption>회원목록</caption>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>아이디</th>
-                        <th>이름</th>
-                        <th>생년월일</th>
-                        <th>성별</th>
-                        <th>최종학력</th>
-                        <th>등록일</th>
-                        <th>보기</th>
-                    </tr>
-                </thead>
-                <tbody>
-                	<c:forEach var="userinfo" items="${list}">
-                	<tr>
-                        <td>${userinfo.u_idx}</td>
-                        <td>${userinfo.u_id}</td>
-                        <td>${userinfo.u_name}</td>
-                        <td>${userinfo.u_birth}</td>
-                        <td>${userinfo.u_gender eq "M" ? "남자" : "여자"}</td>
-                        <td>
-                        	<c:set var="edu" value="${userinfo.u_edu}" />
-                        	<c:choose>
-                        		<c:when test="${edu eq 'univ'}">대졸</c:when>
-                        		<c:when test="${edu eq 'high'}">고졸</c:when>
-                        		<c:when test="${edu eq 'middle'}">중졸</c:when>
-                        		<c:otherwise>유딩</c:otherwise>
-                        	</c:choose>
-                        </td>
-                        <td>
-                        	<fmt:formatDate var="formattedDate" pattern="yyyy-MM-dd" value="${userinfo.cret_date}" />
-                        	<c:out value="${formattedDate}"/>
-                        </td>
-                        <td><a href="/userinfo/view?u_idx=${userinfo.u_idx}&pageNum=${page.cri.pageNum }&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button>보기</button></a></td>
-                    </tr>
-                	</c:forEach>
-                </tbody>
-            </table>
+	                <caption>회원목록</caption>
+	                <thead>
+	                    <tr>
+	                        <th>No</th>
+	                        <th>아이디</th>
+	                        <th>이름</th>
+	                        <th>생년월일</th>
+	                        <th>성별</th>
+	                        <th>최종학력</th>
+	                        <th>등록일</th>
+	                        <th>보기</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                	<c:forEach var="userinfo" items="${list}">
+	                	<tr>
+	                        <td>${userinfo.u_idx}</td>
+	                        <td>${userinfo.u_id}</td>
+	                        <td>${userinfo.u_name}</td>
+	                        <td>${userinfo.u_birth}</td>
+	                        <td>${userinfo.u_gender eq "M" ? "남자" : "여자"}</td>
+	                        <td>
+	                        	<c:set var="edu" value="${userinfo.u_edu}" />
+	                        	<c:choose>
+	                        		<c:when test="${edu eq 'univ'}">대졸</c:when>
+	                        		<c:when test="${edu eq 'high'}">고졸</c:when>
+	                        		<c:when test="${edu eq 'middle'}">중졸</c:when>
+	                        		<c:otherwise>유딩</c:otherwise>
+	                        	</c:choose>
+	                        </td>
+	                        <td>
+	                        	<fmt:formatDate var="formattedDate" pattern="yyyy-MM-dd" value="${userinfo.cret_date}" />
+	                        	<c:out value="${formattedDate}"/>
+	                        </td>
+	                        <td><a href="/userinfo/view?u_idx=${userinfo.u_idx}&pageNum=${page.cri.pageNum }&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button>보기</button></a></td>
+	                    </tr>
+	                	</c:forEach>
+	                </tbody>
+	            </table>
                 <div class="list">
                     <span class="list-button"><a href="/userinfo/list?pageNum=1&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}">[처음]</a></span>
                     <c:if test="${page.prev eq true}" >

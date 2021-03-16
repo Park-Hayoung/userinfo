@@ -95,6 +95,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	
 	@Override
+	public int deleteUserInfoReal(int u_idx) {
+		log.info("UserInfoService deleteUserInfoReal...");
+		return mapper.deleteUserInfoReal(u_idx);
+	}
+	
+	@Override
 	public int getTotal() {
 		log.info("UserInfoService getTotal...");
 		return mapper.getTotal();
@@ -120,5 +126,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 			map.put(s, true);
 		}
 		return map;
+	}
+	
+	@Override
+	public int pwCheck(UserInfoVO userInfo) {
+		log.info("UserInfoService pwCheck... " + userInfo);
+		return mapper.pwCheck(userInfo);
 	}
 }

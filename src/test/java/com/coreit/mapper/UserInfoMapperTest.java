@@ -90,14 +90,29 @@ public class UserInfoMapperTest {
 	}
 	
 //	@Test
+	public void testDeleteReal() {
+		log.info("Test UserInfoMapper deleteUserInfoReal...");
+		log.info(mapper.deleteUserInfoReal(926) == 1 ? "삭제 성공..." : "삭제 실패...");
+	}
+	
+//	@Test
 	public void testGetTotal() {
 		log.info("Test UserInfoMapper getTotal...");
 		log.info(mapper.getTotal());
 	}
 	
-	@Test
+//	@Test
 	public void testGetSearchTotal() {
 		log.info("Test UserInfoMapper getSearchTotal...");
 		log.info(mapper.getSearchTotal("박하영"));
+	}
+	
+//	@Test
+	public void testPwCheck() {
+		log.info("Test UserInfoMapper pwCheck...");
+		UserInfoVO userInfo = new UserInfoVO();
+		userInfo.setU_id("testid");
+		userInfo.setU_pw("1234");
+		log.info(mapper.pwCheck(userInfo) == 1 ? "비밀번호 일치..." : "비밀번호 불일치...");
 	}
 }

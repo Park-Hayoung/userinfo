@@ -1,7 +1,5 @@
 package com.coreit.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +89,12 @@ public class UserInfoServiceTest {
 	}
 	
 //	@Test
+	public void testDeleteReal() {
+		log.info("Test UserInfoService deleteUserInfoReal...");
+		log.info(service.deleteUserInfoReal(923) == 1 ? "삭제 성공..." : "삭제 실패...");
+	}
+	
+//	@Test
 	public void testGetTotal() {
 		log.info("Test UserInfoService getTotal...");
 		log.info(service.getTotal());
@@ -100,5 +104,14 @@ public class UserInfoServiceTest {
 	public void testGetSearchTotal() {
 		log.info("Test UserInfoService getSearchTotal...");
 		log.info(service.getSearchTotal("박하영"));
+	}
+	
+//	@Test
+	public void testPwCheck() {
+		log.info("Test UserInfoService pwCheck...");
+		UserInfoVO userInfo = new UserInfoVO();
+		userInfo.setU_id("testid");
+		userInfo.setU_pw("1234");
+		log.info(service.pwCheck(userInfo) == 1 ? "비밀번호 일치..." : "비밀번호 불일치...");
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.coreit.domain.Criteria;
@@ -132,5 +133,12 @@ public class UserInfoController {
 		rttr.addAttribute("keyword", keyword);
 		
 		return "redirect:/userinfo/list";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/pwCheck", produces = "application/json", method = RequestMethod.POST)
+	public String pwCheck(UserInfoVO userInfo) {
+		log.info("UserInfo pwCheck 요청... " + userInfo);
+		return Integer.toString(service.pwCheck(userInfo));
 	}
 }

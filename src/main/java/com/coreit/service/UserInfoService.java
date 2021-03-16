@@ -25,6 +25,8 @@ public interface UserInfoService {
 	
 	public int deleteUserInfo(int u_idx);
 	
+	public int deleteUserInfoReal(int u_idx);
+	
 	public int getTotal();
 	
 	public int getSearchTotal(String keyword);
@@ -32,4 +34,6 @@ public interface UserInfoService {
 	public List<String> getHobbyList();
 	
 	public HashMap<String, Boolean> getHobbyMap(String hobby);
+	
+	public int pwCheck(UserInfoVO userInfo);
 }

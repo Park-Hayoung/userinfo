@@ -7,6 +7,8 @@
 <jsp:include page="../include/header.jsp" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mystyle.css">
 <script>
+var isPwChecked = false;
+
 $(document).ready(function() {
 	
 });
@@ -50,6 +52,10 @@ function checkForm(frm) {
 		alert("최종학력을 선택해주세요.");
 		return false;
 	}
+	if (!isPwChecked) {
+		alert("비밀번호 인증을 완료해주세요.");
+		return false;
+	}
 
 	return true;
 }
@@ -65,6 +71,39 @@ function isHobbyChecked() {
 		}
 	}
 	return isHobbyChecked;
+}
+
+function pwCheck(id, pw1, pw2) {
+	if (pw1 == "") {
+		alert("비밀번호를 입력해주세요.");
+		return;
+	}
+	if (pw2 == "") {
+		alert("비밀번호 확인을 입력해주세요.");
+		return;
+	}
+	if (pw1 != pw2) {
+		alert("입력한 비밀번호가 서로 일치하지 않습니다.");
+		return;
+	}
+	
+	$.ajax({
+		url: "/userinfo/pwCheck",
+		type: "POST",
+		data: { u_id: id, u_pw: pw1 },
+		cache: false,
+		success: function(result) {
+			if (result == '1') {
+				alert("비밀번호가 일치합니다.");
+				isPwChecked = true;
+			} else {
+				alert("비밀번호가 일치하지 않습니다.");
+			}
+		},
+		error: function(request, status, error) {
+			alert("오류가 발생했습니다.");
+		}
+	});
 }
 </script>
 
@@ -83,7 +122,7 @@ function isHobbyChecked() {
                             <tr>
                                 <th>아이디</th>
                                 <td>
-                                    <input type="text" name="u_id" value="${userInfo.u_id }" readonly>
+                                    <input type="text" name="u_id" value="${userInfo.u_id}" readonly>
                                     <span>영소문자, 숫자조합으로 6~16자리로 입력하세요</span>
                                 </td>
                             </tr>
@@ -98,6 +137,7 @@ function isHobbyChecked() {
                                 <th>비밀번호 확인</th>
                                 <td>
                                     <input type="password" name="u_pw2">
+                                    <a><button onclick="pwCheck('${userInfo.u_id}', frm.u_pw.value, frm.u_pw2.value)">확인</button></a>
                                 </td>
                             </tr>
                             <tr>

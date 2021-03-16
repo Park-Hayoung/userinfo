@@ -52,10 +52,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE u_idx = #{u_idx}
 	</update>
 	
-	<!-- user_info 레코드 삭제 (del_yn = Y 처리) -->
+	<!-- user_info 삭제 처리 (del_yn = Y 처리) -->
 	<update id="deleteUserInfo">
 		UPDATE user_info SET del_yn = 'Y' WHERE u_idx = #{u_idx}
 	</update>
+	
+	<!-- user_info 레코드 삭제 (실제 데이터 삭제) -->
+	<delete id="deleteUserInfoReal">
+		DELETE FROM user_info WHERE u_idx = #{u_idx}
+	</delete>
 	
 	<!-- user_info 총 레코드 갯수 반환 (del_yn = N 인 레코드만) -->
 	<select id="getTotal" resultType="int">
@@ -67,5 +72,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getSearchTotal" resultType="int">
 		SELECT COUNT(u_idx) FROM user_info
 		WHERE u_name LIKE #{keyword} AND del_yn = 'N'
+	</select>
+	
+	<!-- 아이디와 비밀번호가 일치하는 레코드가 있는지 확인 -->
+	<select id="pwCheck" resultType="int">
+		SELECT COUNT(u_idx) FROM user_info
+		WHERE u_id = #{u_id} AND u_pw = SHA2(#{u_pw}, 256)
 	</select>
 </mapper>
