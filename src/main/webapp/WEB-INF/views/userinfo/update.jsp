@@ -74,6 +74,7 @@ function isHobbyChecked() {
 }
 
 function pwCheck(id, pw1, pw2) {
+	// 비밀번호 유효성 검사
 	if (pw1 == "") {
 		alert("비밀번호를 입력해주세요.");
 		return;
@@ -86,7 +87,8 @@ function pwCheck(id, pw1, pw2) {
 		alert("입력한 비밀번호가 서로 일치하지 않습니다.");
 		return;
 	}
-	
+
+	// 비밀번호 유효성 검사를 통과하면 비밀번호가 맞는지 확인
 	$.ajax({
 		url: "/userinfo/pwCheck",
 		type: "POST",

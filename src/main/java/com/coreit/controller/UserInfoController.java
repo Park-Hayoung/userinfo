@@ -66,47 +66,70 @@ public class UserInfoController {
 		return "/userinfo/list";
 	}
 	
-	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String view(@RequestParam("u_idx") int u_idx, Criteria cri, 
-			String keyword, Model model) {
-		log.info("UserInfo view 요청... u_idx : " + u_idx);
-		log.info(cri);
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public String registerForm(Criteria cri, String keyword, Model model) {
+		log.info("UserInfo registerForm 요청...");
 		
-		int total = service.getTotal();
-		PageDTO pageDto = new PageDTO(cri, total);
+		model.addAttribute("cri", cri);
+		model.addAttribute("keyword", keyword);
+		
+		return "/userinfo/register";
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String register(UserInfoVO userInfo, Criteria cri, String keyword,
+			RedirectAttributes rttr) {
+		log.info("UserInfo register 요청... " + userInfo);
+		
+		// cret_id, ip 등등 초기화하는 것부터 하면 됨
+		
+		
+		int result = service.insertUserInfo(userInfo); // 성공시 생성된 u_idx 반환
+		log.info(result == 1 ? "등록 성공..." : "등록 실패...");
+		
+		rttr.addAttribute("u_idx", result);
+		rttr.addAttribute("result", result);
+		rttr.addFlashAttribute(cri);
+		rttr.addAttribute("keyword", keyword);
+		
+		return "redirect:/userinfo/view";
+	}
+	
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public String view(int u_idx, Criteria cri, String keyword, Model model) {
+		log.info("UserInfo view 요청... u_idx : " + u_idx);
+		
+//		int total = service.getTotal();
+//		PageDTO pageDto = new PageDTO(cri, total);
 		
 		model.addAttribute("userInfo", service.getUserInfo(u_idx));
-		model.addAttribute("page", pageDto);
+		model.addAttribute("cri", cri);
 		model.addAttribute("keyword", keyword);
 		
 		return "/userinfo/view";
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String updateForm(@RequestParam("u_idx") int u_idx, Criteria cri, 
-			String keyword, Model model) {
+	public String updateForm(int u_idx, Criteria cri, String keyword, Model model) {
 		log.info("UserInfo updateForm 요청... u_idx : " + u_idx);
 		log.info(cri);
 		
 		UserInfoVO userInfo = service.getUserInfo(u_idx);
-		int total = service.getTotal();
-		PageDTO pageDto = new PageDTO(cri, total);
 		
 		model.addAttribute("userInfo", userInfo);
 		model.addAttribute("hobbyList", service.getHobbyList());
 		model.addAttribute("hobbyMap", service.getHobbyMap(userInfo.getU_hobby()));
-		model.addAttribute("page", pageDto);
+		model.addAttribute("cri", cri);
 		model.addAttribute("keyword", keyword);
 		
 		return "/userinfo/update";
 	}
 	
+	// 업데이트 완료후 result 값에 따라 alert창 띄워주는 기능 추가
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(UserInfoVO userInfo, Criteria cri, 
-			String keyword, RedirectAttributes rttr) {
-		log.info("UserInfo update 요청... u_idx : " + userInfo.getU_idx());
-		log.info(cri);
-		log.info(userInfo);
+	public String update(UserInfoVO userInfo, Criteria cri, String keyword,
+			RedirectAttributes rttr) {
+		log.info("UserInfo update 요청... " + userInfo);
 		
 		int result = service.updateUserInfo(userInfo);
 		log.info(result == 1 ? "수정 성공..." : "수정 실패...");
@@ -120,10 +143,9 @@ public class UserInfoController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String delete(@RequestParam("u_idx") int u_idx, 
-			Criteria cri, String keyword, RedirectAttributes rttr) {
+	public String delete(int u_idx, Criteria cri, String keyword, 
+			RedirectAttributes rttr) {
 		log.info("UserInfo delete 요청... u_idx : " + u_idx);
-		log.info(cri);
 		
 		int result = service.deleteUserInfo(u_idx);
 		log.info(result == 1 ? "삭제 성공..." : "삭제 실패...");

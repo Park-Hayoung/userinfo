@@ -98,10 +98,11 @@ function setCriteria(keyword) {
                         <input type="submit" value="검색">
                     </form>
                 </div>
-                <a href="/register.jsp"><button id="register-button">등록</button></a>
+                <a href="/userinfo/register?pageNum=${page.cri.pageNum}&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button id="register-button">등록</button></a>
             </div>
         </div>
         <!-- 메인 컨텐츠 영역 끝 -->
+        
     <!-- 헤더에서 시작된 wrapper 클래스 div 태그 닫아주기 -->
     </div>
     

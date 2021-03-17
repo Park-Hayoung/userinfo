@@ -78,7 +78,7 @@ function deleteprocess(target) {
                 <div class="button">
                     <a href="/userinfo/update?u_idx=${userInfo.u_idx}&pageNum=${page.cri.pageNum }&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button type="button">수정</button></a>
                     <button onclick="deleteprocess(${userInfo.u_idx});">삭제</button>
-                    <a href="/userinfo/list?pageNum=${page.cri.pageNum }&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button type="button">목록</button></a>
+                    <a href="/userinfo/list?pageNum=${cri.pageNum}&amount=${cri.amount}&groupSize=${cri.groupSize}&keyword=${keyword}"><button type="button">목록</button></a>
                 </div>
             </div>
         </div>
