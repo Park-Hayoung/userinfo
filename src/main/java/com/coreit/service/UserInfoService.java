@@ -35,5 +35,7 @@ public interface UserInfoService {
 	
 	public HashMap<String, Boolean> getHobbyMap(String hobby);
 	
+	public int idCheck(String u_id);
+	
 	public int pwCheck(UserInfoVO userInfo);
 }

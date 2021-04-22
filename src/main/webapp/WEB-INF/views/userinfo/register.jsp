@@ -8,6 +8,8 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/mystyle.css">
 		
 <script type="text/javascript">
+var isIdChecked = false;
+
 function setCriteria(keyword) {
 	var amount = $("#amount").val();
 	var groupSize = $("#groupSize").val();
@@ -141,6 +143,59 @@ function getHobby() {
 	
 	return hobby.substring(0, hobby.length - 1); // 마지막 ',' 제거
 }
+
+function idCheck(id) {
+	// 아이디 유효성 검사
+	if (id == "") {
+		alert("아이디를 입력해주세요.");
+		return;
+	}
+	if (!testId(id)) {
+		alert("영소문자, 숫자조합으로 6~16자리로 입력하세요");
+		return;
+	}
+
+	// 아이디 유효성 검사를 통과하면 아이디가 중복되는지 확인
+	$.ajax({
+		url: "/userinfo/idCheck",
+		type: "POST",
+		data: { u_id: id },
+		cache: false,
+		success: function(result) {
+			if (result == '1') {
+				alert("이미 존재하는 아이디입니다.");
+			} else if (result == '0') {
+				alert("사용 가능한 아이디입니다.");
+				isIdChecked = true;
+			} else {
+				alert("아이디 확인 과정에서 오류가 발생했습니다.");
+			}
+		},
+		error: function(request, status, error) {
+			alert("오류가 발생했습니다.");
+		}
+	});
+}
+
+function testId(id) {
+	var idRegExp = /^[A-Za-z0-9]{6,16}$/;
+	if (!idRegExp.test(id)) {
+		return false;
+	}
+	return true;
+}
+
+function testPassword(pw) {
+	var pwRegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~!@#$^&*])[A-Za-z\d~!@#$^&*]{8,20}$/;
+	var resultObj = $("#password_result");
+	var result = "";
+	if (!pwRegExp.test(pw)) {
+		result = "영소문자, 숫자, 특수문자(~!@#$^&*) 조합으로 8~20자리";
+	} else {
+		result = "사용 가능한 비밀번호입니다.";
+	}
+	resultObj.text(result);
+}
 </script>
         <!-- 메인 컨텐츠 영역 -->
         <div class="contents">
@@ -152,15 +207,16 @@ function getHobby() {
                             <tr>
                                 <th>아이디</th>
                                 <td>
-                                    <input type="text" name="u_id">
-                                    <span>영소문자, 숫자조합으로 6~16자리로 입력하세요</span>
+                                    <input type="text" name="u_id" onkeyup="testId(this.value)">
+                                    <a onclick="idCheck(reg.u_id.value)"><button>아이디 확인</button></a>
+                                    <span id="id_result">영소문자, 숫자조합으로 6~16자리로 입력하세요</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>비밀번호</th>
                                 <td>
-                                    <input type="password" name="u_pw">
-                                    <span>영소문자, 숫자, 특수문자(~!@#$^&*) 조합으로 8~20자리</span>
+                                    <input type="password" name="u_pw" onkeyup="testPassword(this.value)">
+                                    <span id="password_result">영소문자, 숫자, 특수문자(~!@#$^&*) 조합으로 8~20자리</span>
                                 </td>
                             </tr>
                             <tr>

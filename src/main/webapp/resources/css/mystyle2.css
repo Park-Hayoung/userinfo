@@ -51,22 +51,41 @@ a:visited {
     margin-bottom: 20px;
 }
 table {
-    width: 90%;
-    border-collapse: collapse;
+    width: 100%;
     margin: 0 auto;
-}
-caption {
-    text-align: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    border-collapse: collapse;
 }
 th, td{
+	overflow: hidden;
     padding: 10px;
+    font-size: 18px;
     text-align: center;
+    text-overflow: ellipsis;
 }
 th {
     background-color: #eee;
 }
+h3.table_title {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+p.table_cnt {
+	float: right;
+	margin: 0;
+	padding: 0;
+}
+
+/* caption, legend 숨김 */
+caption, legend {
+	overflow: hidden;
+	width: 0;
+	height: 0;
+	font-size: 0;
+	line-height: 0;
+}
+
 /* 요소들을 가운데 정렬 */
 .button {
     display: flex;
@@ -84,7 +103,7 @@ th {
     display: flex;
     align-content: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .list-button {
     margin-right: 5px;
@@ -93,11 +112,10 @@ th {
     display: flex;
     align-content: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 #register-button {
     float: right;
-    margin-right: 50px;
 }
 
 /* 푸터 영역 */

@@ -2,12 +2,13 @@ package com.coreit.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -16,6 +17,7 @@ import com.coreit.domain.PageDTO;
 import com.coreit.domain.SearchVO;
 import com.coreit.domain.UserInfoVO;
 import com.coreit.service.UserInfoService;
+import com.coreit.util.ClientUtil;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -77,17 +79,17 @@ public class UserInfoController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(UserInfoVO userInfo, Criteria cri, String keyword,
-			RedirectAttributes rttr) {
+	public String register(HttpServletRequest request, UserInfoVO userInfo, 
+			Criteria cri, String keyword, RedirectAttributes rttr) {
 		log.info("UserInfo register 요청... " + userInfo);
 		
-		// cret_id, ip 등등 초기화하는 것부터 하면 됨
-		
+		userInfo.setCret_id("admin");
+		userInfo.setCret_ip(ClientUtil.getRemoteIP(request));
 		
 		int result = service.insertUserInfo(userInfo); // 성공시 생성된 u_idx 반환
 		log.info(result == 1 ? "등록 성공..." : "등록 실패...");
 		
-		rttr.addAttribute("u_idx", result);
+		rttr.addAttribute("u_idx", userInfo.getU_idx());
 		rttr.addAttribute("result", result);
 		rttr.addFlashAttribute(cri);
 		rttr.addAttribute("keyword", keyword);
@@ -98,9 +100,6 @@ public class UserInfoController {
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(int u_idx, Criteria cri, String keyword, Model model) {
 		log.info("UserInfo view 요청... u_idx : " + u_idx);
-		
-//		int total = service.getTotal();
-//		PageDTO pageDto = new PageDTO(cri, total);
 		
 		model.addAttribute("userInfo", service.getUserInfo(u_idx));
 		model.addAttribute("cri", cri);
@@ -155,6 +154,13 @@ public class UserInfoController {
 		rttr.addAttribute("keyword", keyword);
 		
 		return "redirect:/userinfo/list";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/idCheck", produces = "application/json", method = RequestMethod.POST)
+	public String idCheck(String u_id) {
+		log.info("UserInfo idCheck 요청... " + u_id);
+		return Integer.toString(service.idCheck(u_id));
 	}
 	
 	@ResponseBody

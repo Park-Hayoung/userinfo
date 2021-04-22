@@ -107,6 +107,12 @@ public class UserInfoServiceTest {
 	}
 	
 //	@Test
+	public void testIdCheck() {
+		log.info("Test UserInfoService idCheck...");
+		log.info(service.idCheck("testid3") == 1 ? "아이디가 이미 존재..." : "아이디가 존재하지 않음...");
+	}
+	
+//	@Test
 	public void testPwCheck() {
 		log.info("Test UserInfoService pwCheck...");
 		UserInfoVO userInfo = new UserInfoVO();

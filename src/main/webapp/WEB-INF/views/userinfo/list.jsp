@@ -32,11 +32,21 @@ function setCriteria(keyword) {
             			</c:forEach>
             		</select>
             	</p>
-            	<!-- 이 놈을 caption 옆에 오도록 배치해라. -->
             	<!-- 그리고 완전삭제 기능 추가해라. -->
-            	<p align="right">총 ${page.total}개</p>
+            	<h3 class="table_title">회원목록</h3>
+            	<p class="table_cnt">총 ${page.total}개</p>
                 <table border='1'>
-	                <caption>회원목록</caption>
+	                <caption><strong>회원목록</strong></caption>
+	                <colgroup>
+	                	<col width="10%">
+	                	<col width="20%">
+	                	<col width="10%">
+	                	<col width="15%">
+	                	<col width="10%">
+	                	<col width="10%">
+	                	<col width="15%">
+	                	<col width="10%">
+	                </colgroup>
 	                <thead>
 	                    <tr>
 	                        <th>No</th>

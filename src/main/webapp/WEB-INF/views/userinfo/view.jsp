@@ -8,7 +8,7 @@
 <script type="text/javascript">
 function deleteprocess(target) {
 	if (confirm("해당 회원을 삭제하시겠습니까?")) {
-		location.href = "/userinfo/delete?u_idx=" + target;
+		location.href = "/userinfo/delete?u_idx=" + target + "&pageNum=${cri.pageNum}&amount=${cri.amount}&groupSize=${cri.groupSize}&keyword=${keyword}"
 	}
 }
 </script>
@@ -76,8 +76,8 @@ function deleteprocess(target) {
                     </tbody>
                 </table>
                 <div class="button">
-                    <a href="/userinfo/update?u_idx=${userInfo.u_idx}&pageNum=${page.cri.pageNum }&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button type="button">수정</button></a>
-                    <button onclick="deleteprocess(${userInfo.u_idx});">삭제</button>
+                    <a href="/userinfo/update?u_idx=${userInfo.u_idx}&pageNum=${cri.pageNum }&amount=${cri.amount}&groupSize=${cri.groupSize}&keyword=${keyword}"><button type="button">수정</button></a>
+                    <button onclick="deleteprocess(${userInfo.u_idx})">삭제</button>
                     <a href="/userinfo/list?pageNum=${cri.pageNum}&amount=${cri.amount}&groupSize=${cri.groupSize}&keyword=${keyword}"><button type="button">목록</button></a>
                 </div>
             </div>

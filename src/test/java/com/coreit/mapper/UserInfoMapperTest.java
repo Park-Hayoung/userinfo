@@ -55,7 +55,7 @@ public class UserInfoMapperTest {
 	public void testInsert() {
 		log.info("Test UserInfoMapper insertUserInfo...");
 		UserInfoVO userInfo = new UserInfoVO();
-		userInfo.setU_id("testid");
+		userInfo.setU_id("testid8");
 		userInfo.setU_pw("1234");
 		userInfo.setU_name("테스트");
 		userInfo.setU_birth("2021-02-09");
@@ -66,8 +66,11 @@ public class UserInfoMapperTest {
 		userInfo.setU_hobby("빵만들기,여행");
 		userInfo.setU_edu("univ");
 		userInfo.setCret_id("testid");
-		userInfo.setCret_ip("192.168.0.115");
-		log.info(mapper.insertUserInfo(userInfo) != 0 ? "삽입 성공..." : "삽입 실패...");
+		userInfo.setCret_ip("127.0.0.1");
+		int result = mapper.insertUserInfo(userInfo);
+		log.info("result : " + result);
+		log.info("생성된 u_idx : " + userInfo.getU_idx());
+		log.info(result == 1 ? "삽입 성공..." : "삽입 실패...");
 	}
 	
 //	@Test
@@ -105,6 +108,12 @@ public class UserInfoMapperTest {
 	public void testGetSearchTotal() {
 		log.info("Test UserInfoMapper getSearchTotal...");
 		log.info(mapper.getSearchTotal("박하영"));
+	}
+	
+//	@Test
+	public void testIdCheck() {
+		log.info("Test UserInfoMapper idCheck...");
+		log.info(mapper.idCheck("testid2") == 1 ? "아이디가 이미 존재..." : "아이디가 존재하지 않음...");
 	}
 	
 //	@Test

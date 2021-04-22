@@ -96,7 +96,7 @@ function pwCheck(id, pw1, pw2) {
 		cache: false,
 		success: function(result) {
 			if (result == '1') {
-				alert("비밀번호가 일치합니다.");
+				alert("비밀번호 확인이 완료되었습니다.");
 				isPwChecked = true;
 			} else {
 				alert("비밀번호가 일치하지 않습니다.");
@@ -114,9 +114,9 @@ function pwCheck(id, pw1, pw2) {
             <div class="user-insert-form">
                 <form id="frm" name="frm" action="/userinfo/update" method="POST" onsubmit="return false">
                     <input type="hidden" name="u_idx" value="${userInfo.u_idx }">
-                    <input type="hidden" name="pageNum" value="${page.cri.pageNum}">
-                    <input type="hidden" name="amount" value="${page.cri.amount}">
-                    <input type="hidden" name="groupSize" value="${page.cri.groupSize}">
+                    <input type="hidden" name="pageNum" value="${cri.pageNum}">
+                    <input type="hidden" name="amount" value="${cri.amount}">
+                    <input type="hidden" name="groupSize" value="${cri.groupSize}">
                     <input type="hidden" name="keyword" value="${keyword}">
                     <table border="1">
                         <caption>회원등록</caption>
@@ -251,8 +251,8 @@ function pwCheck(id, pw1, pw2) {
                     </table>
                     <div class="button">
                         <input type="submit" value="저장" onclick="submitForm(this.form)">
-                        <a href="/userinfo/view?u_idx=${userInfo.u_idx}&pageNum=${page.cri.pageNum }&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button type="button">취소</button></a>
-                        <a href="/userinfo/list?pageNum=${page.cri.pageNum }&amount=${page.cri.amount}&groupSize=${page.cri.groupSize}&keyword=${keyword}"><button type="button">목록</button></a>
+                        <a href="/userinfo/view?u_idx=${userInfo.u_idx}&pageNum=${cri.pageNum }&amount=${cri.amount}&groupSize=${cri.groupSize}&keyword=${keyword}"><button type="button">취소</button></a>
+                        <a href="/userinfo/list?pageNum=${cri.pageNum }&amount=${cri.amount}&groupSize=${cri.groupSize}&keyword=${keyword}"><button type="button">목록</button></a>
                     </div>
                 </form>
             </div>

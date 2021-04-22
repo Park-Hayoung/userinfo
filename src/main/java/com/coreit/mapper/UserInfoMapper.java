@@ -28,5 +28,7 @@ public interface UserInfoMapper {
 	
 	public int getSearchTotal(String keyword);
 	
+	public int idCheck(String u_id);
+	
 	public int pwCheck(UserInfoVO userInfo);
 }

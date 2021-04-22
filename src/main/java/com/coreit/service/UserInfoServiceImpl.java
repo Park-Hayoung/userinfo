@@ -129,6 +129,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 	
 	@Override
+	public int idCheck(String u_id) {
+		log.info("UserInfoService idCheck...");
+		return mapper.idCheck(u_id);
+	}
+	
+	@Override
 	public int pwCheck(UserInfoVO userInfo) {
 		log.info("UserInfoService pwCheck... " + userInfo);
 		return mapper.pwCheck(userInfo);
